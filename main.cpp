@@ -1,10 +1,12 @@
 #include <iostream>
 #include <cstdlib>
-#include <random>
+#include <ctime>
+#include <cstring> // for strlen
 
 using namespace std;
 
 int main(int argc, const char * argv[]) {
+    int targetWordNumber;
     const char* wordList[5];
     wordList[0] = "test";
     wordList[1] = "apple";
@@ -14,18 +16,22 @@ int main(int argc, const char * argv[]) {
     const char* alphabet = "abcdefghijklmnopqrstuvwxyz";
     
     // Seed the random number generator with the current time
-    std::default_random_engine generator(time(nullptr));
+    srand(time(nullptr));
 
-    // Define the distribution
-    std::uniform_int_distribution<int> distribution(0, 4);
-    int wordNumber = distribution(generator);
+    int wordNumber = rand() % 5; // Generate a random number between 0 and 4
     const char* chosenWord = wordList[wordNumber];
-    string word = chosenWord;
-    
-    for(int i = 0; i< word.length(); i++){
-        cout << "-";
+    int wordLength = strlen(chosenWord);
+
+    // Allocate memory for the blank word filled with dashes
+    char* pBlankWord = (char*)malloc((wordLength + 1) * sizeof(char)); 
+
+    // Fill the blank word with dashes
+    for(int i = 0; i < wordLength; i++) {
+        pBlankWord[i] = '-';
     }
-    printf("\n");
+    pBlankWord[wordLength] = '\0';
     
-    //cout << word << "\nlength: " << word.length() << endl;
+    cout << pBlankWord << endl;
+
+    return 0;
 }
